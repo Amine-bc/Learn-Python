@@ -1,12 +1,18 @@
 
 """
+<---------OOP--------->
 So here I will be discovering oop using Python:
 1. First you need to know that they are instance attributes which you find in the constructor __init__ function.
 2. And class attributes which are outside the constructor
 3. Class methods are methods(functions) that gets in their parameters
 4. static method doesn't need parameters
 5. Inheritance : which is a property that allows a class to inherit another class's methods and attributes
-
+6. Polymorphism : is the methods that gives a certain output specific to the type of the input
+7. Encapsulation private attributes, protected attributes. (it doesn't exist really in python) but it still a notation
+you use in your code to make others developers understand that this attribute is private or protected for example.
+8. After working with encapsulation we still need to get and edit the class attributes
+9. We can transform a method to a property by redirecting its output as a property and we will call it as an attribute
+Not a method
 """
 class myclass:
 
@@ -92,3 +98,88 @@ class Third(First, Second):
 
 
 print(Third.mro())
+
+# POLYMORPHISM
+class A:
+    def poly(self):
+        print('This is poly for A')
+        raise NotImplementedError("Derived Class Must Implement This Method")
+class B(A):
+    def poly(self):
+       return 'This is poly for B'
+    pass
+
+class1 = B()
+print(class1.poly())
+
+# Encapsulation
+
+class myclass:
+    def __init__(self,attr1,attr2):
+        self._protecattr =attr1
+        self.__privattr =attr2
+
+myobject = myclass(1,2)
+print(myobject._protecattr)
+# print(myobject.__privatattr) This does'nt work
+# But this works
+#       |
+#       |
+#       v
+print(myobject._myclass__privattr)
+
+# Property
+
+class myclass:
+    @property
+    def meth1(self):
+        return "This Is A Property"
+
+obj = myclass()
+print(obj.meth1)
+
+# From ELZERO
+
+# ----------------------------------------------------------------
+# -- Object Oriented Programming => ABCs => Abstract Base Class --
+# ----------------------------------------------------------------
+# - Class Called Abstract Class If it Has One or More Abstract Methods
+# - abc module in Python Provides Infrastructure for Defining Custom Abstract Base Classes.
+# - By Adding @absttractmethod Decorator on The Methods
+# - ABCMeta Class Is a Metaclass Used For Defining Abstract Base Class
+# --------------------------------------------------------------------
+
+from abc import ABCMeta, abstractmethod
+
+class Programming(metaclass=ABCMeta):
+
+  @abstractmethod
+  def has_oop(self):
+
+    pass
+
+  @abstractmethod
+  def has_name(self):
+
+    pass
+
+class Python(Programming):
+
+  def has_oop(self):
+
+    return "Yes"
+
+class Pascal(Programming):
+
+  def has_oop(self):
+
+    return "No"
+
+  def has_name(self):
+
+    return "Pascal"
+
+one = Pascal()
+
+print(one.has_oop())
+print(one.has_name())
